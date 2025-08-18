@@ -25,7 +25,7 @@ The user can input a value, select the currencies, and instantly see the convert
 
 1. Clone o repositório:
 	```bash
-	git clone https://github.com/pedrohgreis/Currency-Convertor.git
+	git clone https://github.com/pedrohgreis/currency-converter-app.git
 	```
 
 2. Acesse a pasta do projeto:

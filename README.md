@@ -21,8 +21,6 @@ The user can input a value, select the currencies, and instantly see the convert
 - Styled Components
 - Axios
 
-
-
 ## Instalação
 
 1. Clone o repositório:
@@ -38,3 +36,4 @@ The user can input a value, select the currencies, and instantly see the convert
 3. Instale as dependências:
 	```bash
 	npm install
+	```

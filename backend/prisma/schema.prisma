@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Currency {
+  id     String  @id @default(uuid())
+  code   String  @unique() // Ex: USD, EUR, BRL
+  name   String // name of the currency
+  symbol String? // Símbolo, ex: $, €, R$
+
+  fromCurrency ExchangeRate[] @relation("FromCurrency")
+  toCurrency   ExchangeRate[] @relation("ToCurrency")
+
+  conversionsFrom Conversion[] @relation("ConversionFromCurrency")
+  conversionsTo   Conversion[] @relation("ConversionToCurrency")
+
+  @@map("currency")
+}
+
+model ExchangeRate {
+  id             String   @id @default(uuid())
+  fromCurrencyId String // ID (UUID) from origin currency — refering to Currency.id
+  toCurrencyId   String // ID (UUID) destiny currency —  refering to Currency.id
+  rate           Float // Exchange tax
+  updatedAt      DateTime @updatedAt // Date and hour of the last update
+
+  //relations
+  fromCurrency Currency @relation("FromCurrency", fields: [fromCurrencyId], references: [id])
+  toCurrency   Currency @relation("ToCurrency", fields: [toCurrencyId], references: [id])
+
+  @@unique([fromCurrencyId, toCurrencyId]) // a pair of currency are unique
+  @@map("exchange_rate")
+}
+
+model Conversion {
+  id              String   @id @default(uuid())
+  userId          String
+  fromCurrencyId  String
+  toCurrencyId    String
+  amount          Float
+  convertedAmount Float
+  createdAt       DateTime @default(now())
+
+  //relations
+  fromCurrency Currency @relation("ConversionFromCurrency", fields: [fromCurrencyId], references: [id])
+  toCurrency   Currency @relation("ConversionToCurrency", fields: [toCurrencyId], references: [id])
+  user         User     @relation(fields: [userId], references: [id])
+
+  @@map("conversion")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  password_hash String
+  createdAt     DateTime @default(now())
+
+  //relation
+  convertions Conversion[] //convertions made by this user
+
+  @@map("user")
+}

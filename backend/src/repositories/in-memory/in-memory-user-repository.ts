@@ -1,8 +1,7 @@
+import { UserNotFound } from "../../Services/Errors/user-not-foud";
 import {Prisma, type User} from "../../generated/prisma";
 import { userRepository } from "../prisma/userRepository";
 import bycrypt from "bcryptjs"
-
-
 
 export class InMemoryUsersRepository implements userRepository{
     public items:User[] = [];
@@ -21,11 +20,11 @@ export class InMemoryUsersRepository implements userRepository{
         const user = this.items.find((item => item.id === id));
 
         if(!user){
-            throw new Error("User not found");
+            throw new UserNotFound();
         }
 
-        const hashPassword = await bycrypt.hash(newPassword,12)
-        user.password_hash = hashPassword
+        //const hashPassword = await bycrypt.hash(newPassword,12)
+        user.password_hash = newPassword
 
         return user;
     }

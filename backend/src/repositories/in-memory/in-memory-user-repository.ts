@@ -1,7 +1,7 @@
 import { UserNotFound } from "../../Services/Errors/user-not-foud";
 import {Prisma, type User} from "../../generated/prisma";
 import { userRepository } from "../prisma/userRepository";
-import bycrypt from "bcryptjs"
+
 
 export class InMemoryUsersRepository implements userRepository{
     public items:User[] = [];

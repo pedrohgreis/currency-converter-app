@@ -1,7 +1,7 @@
 import type { Currency, Prisma } from "@/generated/prisma";
 import type { CurrencyRepository } from "../prisma/currencyRepository";
 import { UserNotFound } from "@/Services/Errors/user-not-foud";
-import { email } from "zod";
+
 
 export class InMemoryCurrencyRepository implements CurrencyRepository{
     public items:Currency[] = [];

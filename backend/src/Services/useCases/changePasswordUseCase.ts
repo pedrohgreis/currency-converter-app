@@ -1,6 +1,6 @@
 import type { UserInterface } from "@/repositories/interfaces/userInterface";
 import bcrypt from "bcryptjs";
-import { UserNotFound } from "../Errors/user-not-foud";
+import { UserNotFound } from "../Error/user-not-foud";
 
 export class ChangePasswordUseCase{
     constructor(private userRepository: UserInterface){}

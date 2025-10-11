@@ -1,7 +1,7 @@
 import type { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-user-repository";
-import { UserAlreadyExist } from "../Errors/user-already-exists";
+import { UserAlreadyExist } from "../Error/user-already-exists";
 import bycrypt from "bcryptjs"
-import { InvalidEmail } from "../Errors/invalid-email";
+import { InvalidEmail } from "../Error/invalid-email";
 
 
 export class UserRegisterUseCase{

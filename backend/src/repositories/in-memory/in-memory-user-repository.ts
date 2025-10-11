@@ -1,4 +1,4 @@
-import { UserNotFound } from "../../Services/Errors/user-not-foud";
+import { UserNotFound } from "../../Services/Error/user-not-foud";
 import {Prisma, type User} from "../../generated/prisma";
 import { userRepository } from "../prisma/userRepository";
 

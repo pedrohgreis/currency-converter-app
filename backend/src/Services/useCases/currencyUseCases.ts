@@ -1,7 +1,7 @@
 import type { InMemoryCurrencyRepository } from "@/repositories/in-memory/in-memory-currency-repository";
-import { CodeAlreadyExist } from "../Errors/code-exist";
-import { SymbolAlreadyExist } from "../Errors/symbol-exist";
-import { NameCurrencyAlreadyExist } from "../Errors/name-currency-exist";
+import { CodeAlreadyExist } from "../Error/code-exist";
+import { SymbolAlreadyExist } from "../Error/symbol-exist";
+import { NameCurrencyAlreadyExist } from "../Error/name-currency-exist";
 
 
 export class CurrencyUseCase{

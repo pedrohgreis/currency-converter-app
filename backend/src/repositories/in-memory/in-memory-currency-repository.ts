@@ -1,6 +1,6 @@
-import type { Currency, Prisma } from "@/generated/prisma";
+import type { Currency, Prisma } from "../../generated/prisma";
 import type { CurrencyRepository } from "../prisma/currencyRepository";
-import { UserNotFound } from "../../Services/Errors/user-not-foud";
+import { UserNotFound } from "../../Services/Error/user-not-foud";
 
 
 export class InMemoryCurrencyRepository implements CurrencyRepository {

@@ -1,9 +1,9 @@
 import {describe, it, expect, beforeEach} from "vitest";
 import { InMemoryCurrencyRepository } from "../../repositories/in-memory/in-memory-currency-repository";
 import { CurrencyUseCase } from "../useCases/currencyUseCases";
-import { CodeAlreadyExist } from "../Errors/code-exist";
-import { NameCurrencyAlreadyExist } from "../Errors/name-currency-exist";
-import { SymbolAlreadyExist } from "../Errors/symbol-exist";
+import { CodeAlreadyExist } from "../Error/code-exist";
+import { NameCurrencyAlreadyExist } from "../Error/name-currency-exist";
+import { SymbolAlreadyExist } from "../Error/symbol-exist";
 
 
 

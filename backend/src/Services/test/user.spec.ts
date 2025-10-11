@@ -2,8 +2,8 @@ import {describe, it, expect, beforeEach} from "vitest";
 import { UserRegisterUseCase } from "../useCases/registerUseCase";
 import { InMemoryUsersRepository } from "../../repositories/in-memory/in-memory-user-repository";
 import bycrypt from "bcryptjs"
-import { InvalidEmail } from "../Errors/invalid-email";
-import { UserAlreadyExist } from "../Errors/user-already-exists";
+import { InvalidEmail } from "../Error/invalid-email";
+import { UserAlreadyExist } from "../Error/user-already-exists";
 
 describe("Register user", () => {
     let userRepository: InMemoryUsersRepository

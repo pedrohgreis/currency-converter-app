@@ -1,7 +1,6 @@
 import { prisma } from "../../lib/prisma";
 import {Prisma, type User} from "../../generated/prisma";
 import type { UserInterface } from "../interfaces/userInterface";
-import bycrypt from "bcryptjs"
 
 export class userRepository implements UserInterface{
     async createUser(data: Prisma.UserCreateInput){
@@ -29,10 +28,10 @@ export class userRepository implements UserInterface{
     }
 
     async changePassword(id: string, newPassword: string){
-        const hashedPassword = await bycrypt.hash(newPassword, 12);
+        // Expect `newPassword` to be already hashed by the calling use case.
         const changedPassword = await prisma.user.update({
             where: {id},
-            data: {password_hash: hashedPassword}
+            data: {password_hash: newPassword}
         })
 
         return changedPassword;

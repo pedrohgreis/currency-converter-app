@@ -2,7 +2,7 @@ import type { Prisma, Conversion } from "@/generated/prisma";
 import type { ConversionInterface } from "../interfaces/conversionInterface";
 import { prisma } from "../../lib/prisma";
 
-export class conversionRepository implements ConversionInterface{
+export class ConversionRepository implements ConversionInterface{
     async createConversion(data: Prisma.ConversionCreateInput){
         const conversion = await prisma.conversion.create({
             data,

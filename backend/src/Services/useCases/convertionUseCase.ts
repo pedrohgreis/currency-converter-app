@@ -1,9 +1,10 @@
-import type { InMemoryConversionRepository } from "@/repositories/in-memory/in-memory-convertion-repository";
+import type { InMemoryConversionRepository } from "../../repositories/in-memory/in-memory-convertion-repository";
 import { InvalidAmount } from "../Error/invalid-amount";
 import { UserNotFound } from "../Error/user-not-foud";
 import { InvalidDate } from "../Error/invalid-date";
 import { EmptyCurrencyError } from "../Error/EmptyCurrencyError";
 import { SameCurrency } from "../Error/same-currency";
+
 
 
 // !todo: Implemnt
@@ -39,5 +40,17 @@ export class ConvertionUseCase{
         const toCurrencyId = data.toCurrencyId
         if(fromCurrencyId === "" || toCurrencyId === "") throw new EmptyCurrencyError();
         if(fromCurrencyId === toCurrencyId) throw new SameCurrency();
+
+         
+        const conversion = await this.currencyRepository.createConversion({
+            amount,
+            convertedAmount,
+            createdAt: date,
+            user: { connect: { id: userId } },
+            fromCurrency: { connect: { id: fromCurrencyId } },
+            toCurrency: { connect: { id: toCurrencyId } },
+        });
+
+        return {conversion};
     }
 }

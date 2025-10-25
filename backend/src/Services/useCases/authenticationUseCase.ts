@@ -1,6 +1,5 @@
 import type { User } from "@/generated/prisma";
 import type { UserInterface } from "@/repositories/interfaces/userInterface";
-// Do not reveal whether email exists — use InvalidCredentialsError for both cases
 import { compare } from "bcryptjs";
 import { InvalidCredentialsError } from "../Error/invalid-credential-error";
 

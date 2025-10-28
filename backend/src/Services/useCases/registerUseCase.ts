@@ -1,11 +1,11 @@
-import type { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-user-repository";
+import type { UserInterface } from "@/repositories/interfaces/userInterface";
 import { UserAlreadyExist } from "../Error/user-already-exists";
 import bycrypt from "bcryptjs"
 import { InvalidEmail } from "../Error/invalid-email";
 
 
 export class UserRegisterUseCase{
-    constructor(private userRepository: InMemoryUsersRepository){}
+    constructor(private userRepository: UserInterface){}
 
 
     async register(data: {name: string, email: string, password: string}){

@@ -1,12 +1,12 @@
-import type { InMemoryCurrencyRepository } from "@/repositories/in-memory/in-memory-currency-repository";
 import { CodeAlreadyExist } from "../Error/code-exist";
 import { SymbolAlreadyExist } from "../Error/symbol-exist";
 import { NameCurrencyAlreadyExist } from "../Error/name-currency-exist";
+import type { CurrencyInterface } from "@/repositories/interfaces/currencyInterface";
 
 
 export class CurrencyUseCase{
 
-    constructor(private currencyRepository: InMemoryCurrencyRepository){}
+    constructor(private currencyRepository: CurrencyInterface){}
 
     async execute(data:{code:string, name: string, symbol?: string}){
         const code = data.code.trim();
@@ -18,7 +18,7 @@ export class CurrencyUseCase{
         
         let currencySymbol = null;
         if (typeof symbol === "string") {
-            currencySymbol = await this.currencyRepository.findCurrencySymbol(symbol);
+            currencySymbol = await this.currencyRepository.findCurrencyBySymbol(symbol);
         }
 
         if(currencyCode) throw new CodeAlreadyExist();

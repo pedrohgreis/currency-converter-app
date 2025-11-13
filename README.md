@@ -6,7 +6,7 @@ The user can input a value, select the currencies, and instantly see the convert
 ## 🚀 Features
 - Convert between multiple currencies in real time
 - Simple and intuitive interface
-- Powered by [ExchangeRate API] (or a qual vc usou)
+
 
 ## 🛠️ Tech Stack Backend
 - TypeScript (NodeJs)

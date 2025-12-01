@@ -9,7 +9,13 @@ export async function Authenticate(request: FastifyRequest, reply: FastifyReply)
         password: z.string().min(6)
     })
 
-    const {email, password} = authenticateBodySchema.parse(request.body)
+   const parsed = authenticateBodySchema.safeParse(request.body);
+
+    if (!parsed.success) {
+        return reply.status(400).send({ errors: parsed.error });
+    }
+
+    const { email, password } = parsed.data;
 
 
     try{

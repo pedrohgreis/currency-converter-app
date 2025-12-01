@@ -1,15 +1,12 @@
-import type { InMemoryConversionRepository } from "../../repositories/in-memory/in-memory-convertion-repository";
+import type { ConversionInterface } from "@/repositories/interfaces/conversionInterface";
 import { InvalidAmount } from "../Error/invalid-amount";
 import { UserNotFound } from "../Error/user-not-foud";
 import { InvalidDate } from "../Error/invalid-date";
 import { EmptyCurrencyError } from "../Error/EmptyCurrencyError";
 import { SameCurrency } from "../Error/same-currency";
 
-
-
-// !todo: Implemnt
-export class ConvertionUseCase{
-    constructor(private currencyRepository: InMemoryConversionRepository){}
+export class ConversionUseCase{
+    constructor(private currencyRepository: ConversionInterface){}
 
     async execute(data: {
         amount: number, 

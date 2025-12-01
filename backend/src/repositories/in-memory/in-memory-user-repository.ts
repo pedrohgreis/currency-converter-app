@@ -1,9 +1,9 @@
 import { UserNotFound } from "../../Services/Error/user-not-foud";
 import {Prisma, type User} from "../../generated/prisma";
-import { userRepository } from "../prisma/userRepository";
+import { UserRepository } from "../prisma/userRepository";
 
 
-export class InMemoryUsersRepository implements userRepository{
+export class InMemoryUsersRepository implements UserRepository{
     public items:User[] = [];
 
     async findUserByEmail(email: string){

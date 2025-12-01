@@ -1,10 +1,10 @@
 import { AmountNotFound } from "../../Services/Error/amount-not-found";
 import type { Conversion, Prisma } from "../../generated/prisma";
-import type { ConversionRepository } from "../prisma/convertionRepository";
+import type { ConversionInterface } from "../interfaces/conversionInterface";
 import { ConvertionsNotFound } from "../../Services/Error/convertion-not-found";
 import { randomUUID } from "node:crypto";
 
-export class InMemoryConversionRepository implements ConversionRepository{
+export class InMemoryConversionRepository implements ConversionInterface{
     public items:Conversion[] = [];
 
     

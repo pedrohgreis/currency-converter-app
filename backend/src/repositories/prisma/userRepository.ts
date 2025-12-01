@@ -2,7 +2,7 @@ import { prisma } from "../../lib/prisma";
 import {Prisma, type User} from "../../generated/prisma";
 import type { UserInterface } from "../interfaces/userInterface";
 
-export class userRepository implements UserInterface{
+export class UserRepository implements UserInterface{
     async createUser(data: Prisma.UserCreateInput){
         const user = await prisma.user.create({
             data,

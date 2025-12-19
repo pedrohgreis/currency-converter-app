@@ -1,9 +1,9 @@
 import type { User } from "@/generated/prisma";
-import type { userRepository } from "@/repositories/prisma/userRepository";
+import type { UserRepository } from "@/repositories/prisma/userRepository";
 import { UserNotFound } from "../Error/user-not-foud";
 
  interface GetUserProfileUseCaseRequest{
-     userId: string;
+    userId: string;
  }
  
  interface GetUserProfileUseCaseResponse{
@@ -12,7 +12,7 @@ import { UserNotFound } from "../Error/user-not-foud";
 
  export class userProfile{
     constructor(
-        private userRepository: userRepository
+        private userRepository: UserRepository
     ){}
 
     async execute({userId}: GetUserProfileUseCaseRequest): Promise<GetUserProfileUseCaseResponse>{

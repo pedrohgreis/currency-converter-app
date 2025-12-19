@@ -28,7 +28,6 @@ export class UserRepository implements UserInterface{
     }
 
     async changePassword(id: string, newPassword: string){
-        // Expect `newPassword` to be already hashed by the calling use case.
         const changedPassword = await prisma.user.update({
             where: {id},
             data: {password_hash: newPassword}

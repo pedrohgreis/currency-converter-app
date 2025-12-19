@@ -10,7 +10,7 @@ datasource db {
 
 model Currency {
   id     String  @id @default(uuid())
-  code   String  @unique() // Ex: USD, EUR, BRL
+  code   String  @unique // Ex: USD, EUR, BRL
   name   String
   symbol String?
 

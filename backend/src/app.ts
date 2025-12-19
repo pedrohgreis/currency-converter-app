@@ -2,6 +2,7 @@ import fastifyJwt from "@fastify/jwt";
 import fastify from "fastify";
 import { env } from "./env";
 import fastifyCookie from "@fastify/cookie";
+import { usersRoutes } from "./http/controller/user/Routes";
 
 export const app = fastify();
 
@@ -19,6 +20,6 @@ app.register(fastifyJwt, {
 })
 
 app.register(fastifyCookie)
-
+app.register(usersRoutes)
 
 // toDo: need to finish with the routes and validation error

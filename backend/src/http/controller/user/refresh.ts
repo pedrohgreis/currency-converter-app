@@ -5,7 +5,13 @@ export async function refresh(request: FastifyRequest, reply: FastifyReply){
     try{
         await request.jwtVerify({onlyCookie: true})
 
-        const user = request.user;
+        const userId = request.user?.sub
+
+        if(!userId){
+            return reply.status(401).send({ message: 'Unauthorized' })
+        }
+
+        const isProduction = process.env.NODE_ENV === 'production'
 
         const token = await reply.jwtSign({}, {
             sign: {
@@ -24,8 +30,8 @@ export async function refresh(request: FastifyRequest, reply: FastifyReply){
         return reply.status(201)
         .setCookie("refreshToken", refreshToken, {
             path: "/",
-            secure: true,
-            sameSite: true,
+            secure: isProduction,
+            sameSite: isProduction ? 'strict' : 'lax',
             httpOnly: true
         })
         .send({

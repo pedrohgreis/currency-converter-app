@@ -25,6 +25,9 @@ export async function Authenticate(request: FastifyRequest, reply: FastifyReply)
             email,
             password
         })
+        
+        const isProduction = process.env.NODE_ENV === 'production'
+
 
         const token = await reply.jwtSign({}, {
             sign: {
@@ -42,8 +45,8 @@ export async function Authenticate(request: FastifyRequest, reply: FastifyReply)
         return reply.status(200)
         .setCookie("refreshToken", refreshToken, {
             path: "/",
-            secure: true,
-            sameSite: true,
+            secure: isProduction,
+            sameSite: isProduction ? 'strict' : 'lax',
             httpOnly: true,
         })
         .send({

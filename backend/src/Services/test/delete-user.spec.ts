@@ -39,7 +39,4 @@ describe("Delete user", () => {
             sut.delete({ userId: "non-existent-id" })
         ).rejects.toThrow("User not found")
     })
-
-
-
 })

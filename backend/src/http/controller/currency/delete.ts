@@ -1,4 +1,4 @@
-import { CurrencyNotDeleted } from "@/Services/Error/currency-not-deleted";
+import { CurrencyNotFound } from "@/Services/Error/currency-not-found";
 import { makeDeleteCurrencyUseCase } from "@/Services/factories/make-delete-currency-use-case";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
@@ -26,8 +26,8 @@ export async function DeleteCurrency(request: FastifyRequest<{Params: {id: strin
         return reply.status(200).send({message: "Currency deleted"})
 
     } catch(error){
-        if(error instanceof CurrencyNotDeleted){
-            return reply.status(404).send({message: error.message})
+        if(error instanceof CurrencyNotFound){
+            return reply.status(404).send({message: (error as CurrencyNotFound).message})
         }
 
         throw error;

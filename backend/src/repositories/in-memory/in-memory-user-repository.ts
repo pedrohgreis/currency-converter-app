@@ -32,7 +32,7 @@ export class InMemoryUsersRepository implements UserRepository{
     async deleteUser(id: string){
         const index = this.items.findIndex((item) => item.id === id);
         
-        if(!index){
+        if(index === -1){
             throw new Error("User not found")
         }
 

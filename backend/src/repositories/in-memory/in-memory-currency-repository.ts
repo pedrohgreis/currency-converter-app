@@ -1,6 +1,7 @@
 import type { Currency, Prisma } from "../../generated/prisma";
 import type { CurrencyRepository } from "../prisma/currencyRepository";
 import { UserNotFound } from "../../Services/Error/user-not-foud";
+import { CurrencyNotFound } from "../../Services/Error/currency-not-found";
 
 
 export class InMemoryCurrencyRepository implements CurrencyRepository {
@@ -54,7 +55,7 @@ export class InMemoryCurrencyRepository implements CurrencyRepository {
 
     async deleteCurrency(id: string) {
         const index = this.items.findIndex(item => item.id === id);
-        if (index === -1) throw new UserNotFound();
+        if (index === -1) throw new CurrencyNotFound();
         const [deletedCurrency] = this.items.splice(index, 1);
         if (!deletedCurrency) throw new Error("User not found after splice");
         return deletedCurrency;

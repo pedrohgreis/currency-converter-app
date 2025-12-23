@@ -1,17 +1,17 @@
 import {describe, it, expect, beforeEach} from "vitest";
 import { InMemoryConversionRepository } from "../../repositories/in-memory/in-memory-convertion-repository";
-import { ConvertionUseCase } from "../useCases/convertionUseCase";
+import { ConversionUseCase } from "../useCases/convertionUseCase";
 
 
 
 
 describe("Register user", () => {
     let conversionRepository: InMemoryConversionRepository
-    let sut:ConvertionUseCase
+    let sut:ConversionUseCase
 
     beforeEach(() => {
         conversionRepository = new InMemoryConversionRepository();
-        sut = new ConvertionUseCase(conversionRepository);
+        sut = new ConversionUseCase(conversionRepository);
     })
 
     it("should create convertion", async () => {

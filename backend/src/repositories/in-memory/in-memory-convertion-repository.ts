@@ -81,5 +81,15 @@ export class InMemoryConversionRepository implements ConversionInterface{
         const deletedCount = initialLength - this.items.length;
         return deletedCount;
     }
-    
+
+
+    async deleteConvertionById(id: string){
+        const index = this.items.findIndex(item => item.id === id)
+
+        if(index === -1) throw new ConvertionsNotFound()
+
+        const [deletedById] = this.items.splice(index,1)
+
+        return deletedById!
+    }   
 }

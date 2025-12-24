@@ -53,7 +53,7 @@ describe("Register user", () => {
         expect(result.conversion.id).toBeTruthy()
     })
 
-    it("should find conversion by currencyId", async () => {
+    it("should delete conversion by currencyId", async () => {
         const conversion = {
             id: "1",
             amount: 50,

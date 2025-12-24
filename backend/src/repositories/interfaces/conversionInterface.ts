@@ -18,4 +18,6 @@ export interface ConversionInterface{
     findRecentConversions(limit?: number): Promise<Conversion[]>
 
     deleteConversion(olderThan: Date): Promise<number>
+
+    deleteConvertionById(id: string): Promise<Conversion | null>
 }

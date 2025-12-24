@@ -99,5 +99,15 @@ export class ConversionRepository implements ConversionInterface{
 
         return result.count;
     }
+
+    async deleteConvertionById(id: string){
+        const convertion = await prisma.conversion.delete({
+            where:{
+                id
+            }
+        })
+
+        return convertion;
+    }
     
 }

@@ -3,10 +3,12 @@ import fastify from "fastify";
 import { env } from "./env";
 import fastifyCookie from "@fastify/cookie";
 import { usersRoutes } from "./http/controller/user/Routes";
+import { convertionRoutes } from "./http/controller/conversion/Routes";
+import { currencyRoutes } from "./http/controller/currency/Routes";
 
 export const app = fastify();
 
-app.ready
+app.register(fastifyCookie)
 
 app.register(fastifyJwt, {
     secret: env.JWT_SECRET,
@@ -19,7 +21,12 @@ app.register(fastifyJwt, {
     }
 })
 
-app.register(fastifyCookie)
-app.register(usersRoutes)
+try{
+    app.register(usersRoutes)
+    app.register(convertionRoutes)
+    app.register(currencyRoutes)
 
-// toDo: need to finish with the routes and validation error
+}catch(error){
+    console.error("Failed to register routes", error)
+    process.exit(1)
+}

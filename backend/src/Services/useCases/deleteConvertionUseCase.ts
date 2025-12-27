@@ -1,5 +1,5 @@
 import type { ConversionRepository } from "@/repositories/prisma/convertionRepository"
-import { ConvertionNotDeleted } from "../Error/currency-not-deletd"
+import { ConvertionNotDeleted } from "../Error/convertion-not-deleted"
 import type { Conversion } from "@/generated/prisma"
 
 interface ConvertionDletedByDayRequest{

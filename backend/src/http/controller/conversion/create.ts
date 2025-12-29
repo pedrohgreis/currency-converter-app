@@ -23,6 +23,10 @@ export async function create(request: FastifyRequest, reply: FastifyReply){
 
     const {amount, fromCurrencyId, toCurrencyId, createdAt} = parsed.data;
 
+    if(amount <= 0){
+        return reply.status(400).send({error: "Amount must be greater than 0"})
+    }
+
     try{
         const useCase = makeConversionUseCase()
         

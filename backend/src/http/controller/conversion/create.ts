@@ -1,7 +1,7 @@
 import z, { uuid } from 'zod'
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { makeConversionUseCase } from '@/Services/factories/make-conversion-use-case';
-import { CouldNotCreateConvertion } from '@/Services/Error/could-not-convertion-currency';
+import { CouldNotCreateConversion } from '@/Services/Error/could-not-conversion-currency';
 
 export async function create(request: FastifyRequest, reply: FastifyReply){
     const conversionBodySchema = z.object({
@@ -37,7 +37,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply){
 
         return reply.status(201).send({ conversion })
     } catch(error){
-        if(error instanceof CouldNotCreateConvertion){
+        if(error instanceof CouldNotCreateConversion){
             return reply.status(409).send({message: error.message})
         }
 

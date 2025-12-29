@@ -1,8 +1,10 @@
 import z, { uuid } from 'zod'
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { makeConversionUseCase } from '@/Services/factories/make-conversion-use-case';
+import { CouldNotCreateConversion } from '@/Services/Error/could-not-create-conversion';
 
-export async function conversion(request: FastifyRequest, reply: FastifyReply){
+
+export async function create(request: FastifyRequest, reply: FastifyReply){
     const conversionBodySchema = z.object({
         amount: z.coerce.number().positive(),
         fromCurrencyId: z.string().pipe(uuid()),
@@ -39,8 +41,12 @@ export async function conversion(request: FastifyRequest, reply: FastifyReply){
         })
 
         return reply.status(201).send({ conversion })
-    } catch(err){
-        request.log.error?.(err)
-        return reply.status(500).send({ error: 'Internal server error' })
+    } catch(error){
+        if(error instanceof CouldNotCreateConversion){
+            return reply.status(409).send({message: error.message})
+        }
+
+        throw error
     }
+
 }

@@ -4,13 +4,87 @@ import { Authenticate } from "./auth";
 import { Profile } from "./profile";
 import { verifyJWT } from "../../middlewares/verify-jwt";
 import { refresh } from "./refresh";
+import { authResponse, createUserBody, loginUserBody, unauthorizedResponse, userErrorResponse, userResponse, userSchema } from "../schemas/user.schema";
 
 export async function usersRoutes(app: FastifyInstance){
-    app.post('/user', Register)
-    app.post('/session', Authenticate)
+    app.post('/user', {
+        schema:{
+            ...userSchema,
+            description: "Create new user",
+            body: createUserBody,
+            response:{
+                201:{
+                    description: "User created",
+                    ...userResponse
+                },
+                400:{
+                    description: "Invalid request",
+                    ...userErrorResponse
+                }
+            }
+        }
+    },Register)
 
-    app.patch('/token/refresh', refresh)
+
+    app.post('/session', {
+        schema:{
+            ...userSchema,
+            description: "Authentication",
+            body: loginUserBody,
+            response:{
+                200:{
+                    description: "Authenticated",
+                    ...authResponse
+                },
+                400:{
+                    description: "Invalid request",
+                    ...userErrorResponse
+                },
+                401:{
+                    description: "Unauthorized",
+                    ...unauthorizedResponse
+                }
+            }
+        }
+    },Authenticate)
+
+    app.patch('/token/refresh', {
+        schema:{
+            ...userSchema,
+            description: "Refresh access token",
+            response:{
+                200:{
+                    description: "Authenticated",
+                    ...authResponse
+                },
+                400:{
+                    description: "Invalid request",
+                    ...userErrorResponse
+                }
+            }
+        }
+    },refresh)
 
     // route when user is logged in
-    app.get('/me', { onRequest: [verifyJWT] }, Profile)
+    app.get('/me', {
+        onRequest: [verifyJWT],
+        schema:{
+            ...userSchema,
+            summary: "User logged in",
+            response:{
+                200:{
+                    description: "Logged in",
+                    ...userResponse
+                },
+                400:{
+                    description: "Invalid request",
+                    ...userErrorResponse
+                },
+                401:{
+                    description: "Unauthorized",
+                    ...unauthorizedResponse
+                }
+            }
+        }
+    },Profile)
 }

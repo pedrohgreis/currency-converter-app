@@ -35,12 +35,12 @@ export async function DeleteConvertionById(request: FastifyRequest<{Params: {id:
     }
 }
 
-export async function DeleteConvertionByDate(request: FastifyRequest<{ Querystring: { days: string } }>, reply: FastifyReply){
+export async function DeleteConvertionByDate(request: FastifyRequest<{ Params: { days: string } }>, reply: FastifyReply){
     const deleteConvertionSchema = z.object({
         days: z.string().transform(Number).pipe(z.number().positive())
     })
 
-    const parsed = deleteConvertionSchema.safeParse(request.query)
+    const parsed = deleteConvertionSchema.safeParse(request.params)
 
     if(!parsed.success){
         return reply.status(500).send({errors: z.treeifyError(parsed.error)})

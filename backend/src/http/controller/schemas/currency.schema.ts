@@ -32,7 +32,7 @@ export const currencyArrayResponse = {
     items: currencyResponse
 }
 
-export const errorResponse = {
+export const currencyErrorResponse = {
     type: "object",
     properties:{
         message:{type: "string", examples: ["Error"]},

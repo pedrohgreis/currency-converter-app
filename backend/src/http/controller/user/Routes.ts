@@ -5,9 +5,11 @@ import { Profile } from "./profile";
 import { verifyJWT } from "../../middlewares/verify-jwt";
 import { refresh } from "./refresh";
 import { authResponse, createUserBody, loginUserBody, unauthorizedResponse, userErrorResponse, userResponse, userSchema } from "../schemas/user.schema";
+import { Delete } from "./delete";
+import { currencyResponse } from "../schemas/currency.schema";
 
 export async function usersRoutes(app: FastifyInstance){
-    app.post('/user', {
+    app.post('/users', {
         schema:{
             ...userSchema,
             description: "Create new user",
@@ -87,4 +89,27 @@ export async function usersRoutes(app: FastifyInstance){
             }
         }
     },Profile)
+
+    app.delete("/user", {
+        onRequest: [verifyJWT],
+        schema:{
+            ...userSchema,
+            summary: "Delete user",
+            response:{
+                200:{
+                    description: "user deleted",
+                    ...currencyResponse
+                },
+                400:{
+                    description: "Invalid request",
+                    ...userErrorResponse
+                },
+                401:{
+                    description: "User not found",
+                    ...userErrorResponse
+                }
+            }
+            
+        }
+    }, Delete)
 }

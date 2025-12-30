@@ -2,9 +2,11 @@ import type { FastifyInstance } from "fastify";
 import { create } from "./create";
 import { DeleteConvertionByDate, DeleteConvertionById } from "./delete";
 import { conversionErrorResponse, conversionResponse, conversionSchema, createConversionBody } from "../schemas/convertion.schema";
+import { verifyJWT } from "@/http/middlewares/verify-jwt";
 
 export async function convertionRoutes(app: FastifyInstance){
-    app.post('/convertion',{
+    app.post('/conversion',{
+        onRequest: [verifyJWT],
         schema:{
             ...conversionSchema,
             description: "Create new conversion",
@@ -22,7 +24,8 @@ export async function convertionRoutes(app: FastifyInstance){
         }
     }, create)
 
-    app.delete("/convertion/:id", {
+    app.delete<{Params: {id: string}}>("/conversion/:id", {
+        onRequest: [verifyJWT],
         schema:{
             ...conversionSchema,
             summary: "Delete conversion by ID",
@@ -51,7 +54,8 @@ export async function convertionRoutes(app: FastifyInstance){
     },DeleteConvertionById)
 
 
-    app.delete("/convertion/older-than/:days", {
+    app.delete<{Params: {days: string}}>("/conversion/older-than/:days", {
+        onRequest: [verifyJWT],
         schema: {
             ...conversionSchema,
             summary: "Delete conversion after 15 days",

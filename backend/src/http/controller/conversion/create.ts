@@ -35,7 +35,6 @@ export async function create(request: FastifyRequest, reply: FastifyReply){
             fromCurrencyId,
             toCurrencyId,
             createdAt,
-            convertedAmount: 0,
             userId
         })
 

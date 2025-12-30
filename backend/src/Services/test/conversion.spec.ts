@@ -1,24 +1,30 @@
-import {describe, it, expect, beforeEach} from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { InMemoryConversionRepository } from "../../repositories/in-memory/in-memory-convertion-repository";
 import { ConversionUseCase } from "../useCases/convertionUseCase";
+import { InMemoryExchangeRateRepository } from "@/repositories/in-memory/in-memory-exchangeRate";
 
 
 
 
-describe("Register user", () => {
+describe("Conversion use case", () => {
     let conversionRepository: InMemoryConversionRepository
+    let exchangeRateRepository: InMemoryExchangeRateRepository
     let sut:ConversionUseCase
 
     beforeEach(() => {
         conversionRepository = new InMemoryConversionRepository();
-        sut = new ConversionUseCase(conversionRepository);
+        exchangeRateRepository = new InMemoryExchangeRateRepository();
+        exchangeRateRepository.items = [
+            { id: "rate-1", fromCurrencyId: "1", toCurrencyId: "2", rate: 0.8, updatedAt: new Date() },
+            { id: "rate-2", fromCurrencyId: "USD", toCurrencyId: "BRL", rate: 1.6, updatedAt: new Date() },
+            { id: "rate-3", fromCurrencyId: "EUR", toCurrencyId: "BRL", rate: 2, updatedAt: new Date() }
+        ]
+        sut = new ConversionUseCase(conversionRepository, exchangeRateRepository);
     })
 
-    it("should create convertion", async () => {
-        
+    it("should create conversion and compute amount", async () => {
         const conversion = {
             amount: 50,
-            convertedAmount: 40,
             createdAt: new Date(),
             userId: "user-1",
             fromCurrencyId: "1",
@@ -29,19 +35,18 @@ describe("Register user", () => {
 
         expect(result.conversion).toMatchObject({
             amount: conversion.amount,
-            convertedAmount: conversion.convertedAmount,
             createdAt: conversion.createdAt,
             userId: conversion.userId,
             fromCurrencyId: conversion.fromCurrencyId,
             toCurrencyId: conversion.toCurrencyId
         })
+        expect(result.conversion.convertedAmount).toBeCloseTo(40)
     })
 
     it("should find conversion by id", async () => {
         const conversion = {
             id: "1",
             amount: 50,
-            convertedAmount: 40,
             createdAt: new Date(),
             userId: "user-1",
             fromCurrencyId: "1",
@@ -57,7 +62,6 @@ describe("Register user", () => {
         const conversion = {
             id: "1",
             amount: 50,
-            convertedAmount: 40,
             createdAt: new Date(),
             userId: "user-1",
             fromCurrencyId: "USD",
@@ -76,7 +80,6 @@ describe("Register user", () => {
         const conversion = {
             id: "1",
             amount: 50,
-            convertedAmount: 40,
             createdAt: new Date(),
             userId: "user-1",
             fromCurrencyId: "USD",
@@ -85,7 +88,7 @@ describe("Register user", () => {
 
         const result = await sut.execute(conversion)
 
-        expect(result.conversion.convertedAmount).toBeTruthy()
+        expect(result.conversion.convertedAmount).toBeCloseTo(80)
         expect(Number.isFinite(result.conversion.convertedAmount)).toBe(true)
     })
 
@@ -93,7 +96,6 @@ describe("Register user", () => {
         const conversion = {
             id: "1",
             amount: 50,
-            convertedAmount: 40,
             createdAt: new Date(),
             userId: "user-1",
             fromCurrencyId: "USD",
@@ -111,7 +113,6 @@ describe("Register user", () => {
 
         const conversion1 = {
             amount: 30,
-            convertedAmount: 25,
             createdAt: yesterday,
             userId: "user-1",
             fromCurrencyId: "USD",
@@ -120,7 +121,6 @@ describe("Register user", () => {
 
         const conversion2 = {
             amount: 50,
-            convertedAmount: 40,
             createdAt: now,
             userId: "user-1",
             fromCurrencyId: "USD",
@@ -145,7 +145,6 @@ describe("Register user", () => {
         const conversion1 = {
             id: "1",
             amount: 30,
-            convertedAmount: 25,
             createdAt: ontem, 
             userId: "user-1",
             fromCurrencyId: "USD",
@@ -155,7 +154,6 @@ describe("Register user", () => {
         const conversion2 = {
             id: "2",
             amount: 200,
-            convertedAmount: 100,
             createdAt: hoje, 
             userId: "user-2",
             fromCurrencyId: "EUR",

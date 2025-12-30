@@ -1,16 +1,21 @@
 import type { ConversionInterface } from "@/repositories/interfaces/conversionInterface";
+import type { ExchangeRateInterface } from "@/repositories/interfaces/exchangeRateInterface";
 import { InvalidAmount } from "../Error/invalid-amount";
 import { UserNotFound } from "../Error/user-not-foud";
 import { InvalidDate } from "../Error/invalid-date";
 import { EmptyCurrencyError } from "../Error/EmptyCurrencyError";
 import { SameCurrency } from "../Error/same-currency";
+import { InvalidRate } from "../Error/invalid-rate";
+import { RateNotFound } from "../Error/rate-not-found";
 
 export class ConversionUseCase{
-    constructor(private currencyRepository: ConversionInterface){}
+    constructor(
+        private readonly conversionRepository: ConversionInterface,
+        private readonly exchangeRateRepository: ExchangeRateInterface
+    ){}
 
     async execute(data: {
         amount: number, 
-        convertedAmount: number, 
         createdAt: Date, 
         userId: string, 
         fromCurrencyId: string, 
@@ -19,10 +24,6 @@ export class ConversionUseCase{
         // verifying amount
         const amount = data.amount
         if(typeof amount !== 'number' || !Number.isFinite(amount) || amount <= 0) throw new InvalidAmount();
-
-        //verifying converted amount
-        const convertedAmount = data.convertedAmount
-        if(typeof convertedAmount !== 'number' || !Number.isFinite(convertedAmount) || convertedAmount <= 0) throw new InvalidAmount();
 
         // verifying userId
         const userId = data.userId
@@ -38,8 +39,15 @@ export class ConversionUseCase{
         if(fromCurrencyId === "" || toCurrencyId === "") throw new EmptyCurrencyError();
         if(fromCurrencyId === toCurrencyId) throw new SameCurrency();
 
-         
-        const conversion = await this.currencyRepository.createConversion({
+        const rate = await this.exchangeRateRepository.fetchRate(fromCurrencyId, toCurrencyId)
+
+        if(!rate) throw new RateNotFound()
+
+        const convertedAmount = amount * rate.rate
+
+        if(!Number.isFinite(convertedAmount) || convertedAmount <= 0) throw new InvalidRate()
+
+        const conversion = await this.conversionRepository.createConversion({
             amount,
             convertedAmount,
             createdAt: date,

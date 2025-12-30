@@ -2,11 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "type": "module",
-  "main": "dist/server.js",
+  "main": "dist/server.mjs",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsup --out-dir dist",
-    "start": "node dist/server.js",
+    "start": "node dist/server.mjs",
     "test": "vitest"
   },
   "keywords": [],

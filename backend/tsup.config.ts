@@ -2,7 +2,7 @@ import { defineConfig } from 'tsup'
 
 export default defineConfig({
   entry: ['src/app.ts', 'src/server.ts'],
-  format: ['cjs'],
+  format: ['esm'],
   target: 'es2020',
   outDir: 'dist',
   clean: true,

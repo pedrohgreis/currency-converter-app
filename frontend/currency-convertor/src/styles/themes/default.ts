@@ -2,6 +2,8 @@
 export const defaultThemes = {
     white: "#FFF",
 
+    "blue-50": "#eff6ff",
+    "blue-100": "#dbeafe", // for nav hover
     "blue-600": "#2563EB", // for buttons and links
 
     "cyan-500": "#06B6D4", // for hover

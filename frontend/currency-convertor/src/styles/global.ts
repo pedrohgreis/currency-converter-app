@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
 
 
     body {
-        background-color: ${props => props.theme.white};
+        background-color: ${({theme}) => theme["slate-50"]};
         -webkit-font-smoothing: antialiased;
         width: 100vw;
         height: 100vh;

@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-router-dom": "^7.11.0",
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
@@ -19,6 +20,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
+    "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.36",
     "@vitejs/plugin-react-swc": "^4.2.2",
     "eslint": "^9.39.1",
